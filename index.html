@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Valentine's Day Cynthia!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <title>HAPPY VALENTINE'S DAY CYNTHIA!</title>
     <style>
+        @font-face {
+            font-family: 'Swanse';
+            src: url('SWANSE__.TTF') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -13,17 +18,15 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Swanse', 'Georgia', serif;
             overflow-x: hidden;
         }
 
-        /* Animated Blob Background */
+        /* ─── Animated Blob Background ─── */
         .blob-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: #0a0015;
             overflow: hidden;
             z-index: -1;
@@ -37,131 +40,184 @@
             animation: float 20s infinite ease-in-out;
         }
 
-        .blob:nth-child(1) {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, #ff1493, #c71585);
-            top: 20%;
-            left: 10%;
-            animation-duration: 25s;
-            animation-delay: 0s;
-            z-index: 1;
-        }
-
-        .blob:nth-child(2) {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, #9d4edd, #7209b7);
-            top: 60%;
-            right: 15%;
-            animation-duration: 30s;
-            animation-delay: -5s;
-            z-index: 0;
-        }
-
-        .blob:nth-child(3) {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, #ff1493, #ff69b4);
-            bottom: 15%;
-            left: 50%;
-            animation-duration: 28s;
-            animation-delay: -10s;
-            z-index: 2;
-        }
-
-        .blob:nth-child(4) {
-            width: 550px;
-            height: 550px;
-            background: radial-gradient(circle, #c71585, #9d4edd);
-            top: 40%;
-            left: 70%;
-            animation-duration: 35s;
-            animation-delay: -15s;
-            z-index: 0;
-        }
-
-        .blob:nth-child(5) {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, #7209b7, #ff1493);
-            top: 10%;
-            right: 25%;
-            animation-duration: 32s;
-            animation-delay: -8s;
-            z-index: 1;
-        }
+        .blob:nth-child(1) { width:400px;height:400px;background:radial-gradient(circle,#ff1493,#c71585);top:20%;left:10%;animation-duration:25s;animation-delay:0s; }
+        .blob:nth-child(2) { width:600px;height:600px;background:radial-gradient(circle,#9d4edd,#7209b7);top:60%;right:15%;animation-duration:30s;animation-delay:-5s; }
+        .blob:nth-child(3) { width:350px;height:350px;background:radial-gradient(circle,#ff1493,#ff69b4);bottom:15%;left:50%;animation-duration:28s;animation-delay:-10s; }
+        .blob:nth-child(4) { width:550px;height:550px;background:radial-gradient(circle,#c71585,#9d4edd);top:40%;left:70%;animation-duration:35s;animation-delay:-15s; }
+        .blob:nth-child(5) { width:450px;height:450px;background:radial-gradient(circle,#7209b7,#ff1493);top:10%;right:25%;animation-duration:32s;animation-delay:-8s; }
 
         @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            25% {
-                transform: translate(100px, 50px) scale(1.2);
-            }
-            50% {
-                transform: translate(-50px, 100px) scale(0.8);
-            }
-            75% {
-                transform: translate(80px, -80px) scale(1.1);
-            }
+            0%,100% { transform: translate(0,0) scale(1); }
+            25%      { transform: translate(100px,50px) scale(1.2); }
+            50%      { transform: translate(-50px,100px) scale(0.8); }
+            75%      { transform: translate(80px,-80px) scale(1.1); }
         }
 
-        /* Welcome Screen */
+        /* ─── LOADING SCREEN ─── */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loading-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-title {
+            font-family: 'Swanse', cursive;
+            color: white;
+            font-size: 1.4rem;
+            text-align: center;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 20px rgba(255,20,147,0.8);
+            opacity: 0.85;
+        }
+
+        /* Heart SVG fill animation */
+        .heart-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart-svg {
+            width: 160px;
+            height: 160px;
+            filter: drop-shadow(0 0 20px rgba(255,20,147,0.7));
+        }
+
+        /* Outline path */
+        .heart-outline {
+            fill: none;
+            stroke: rgba(255, 105, 180, 0.35);
+            stroke-width: 2;
+        }
+
+        /* Clip path for fill level */
+        #heart-clip rect {
+            /* driven by JS */
+            transition: y 0.15s ease, height 0.15s ease;
+        }
+
+        .heart-fill {
+            fill: url(#heartGradient);
+            clip-path: url(#heart-clip-path);
+        }
+
+        /* Shimmer overlay on heart */
+        .heart-shimmer {
+            fill: url(#shimmerGradient);
+            clip-path: url(#heart-clip-path);
+            opacity: 0.4;
+            animation: shimmerMove 2s linear infinite;
+        }
+
+        @keyframes shimmerMove {
+            0%   { transform: translateX(-160px); }
+            100% { transform: translateX(160px); }
+        }
+
+        /* Percentage text inside heart */
+        .heart-percent {
+            position: absolute;
+            font-family: 'Swanse', cursive;
+            font-size: 1.6rem;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            pointer-events: none;
+            letter-spacing: -0.02em;
+        }
+
+        /* Floating particles during load */
+        .load-particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff69b4;
+            pointer-events: none;
+            animation: floatUp var(--dur) ease-in infinite;
+            animation-delay: var(--delay);
+            left: var(--x);
+            bottom: -20px;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0%   { opacity: 0; transform: translateY(0) scale(1); }
+            10%  { opacity: 0.8; }
+            90%  { opacity: 0.4; }
+            100% { opacity: 0; transform: translateY(-100vh) scale(0.3); }
+        }
+
+        .loading-status {
+            color: rgba(255,105,180,0.75);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            min-height: 1.2em;
+            text-align: center;
+        }
+
+        /* ─── Welcome Screen ─── */
         #welcome-screen {
             min-height: 100vh;
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
             position: relative;
+            animation: screenIn 0.6s ease forwards;
+        }
+
+        #welcome-screen.visible { display: flex; }
+
+        @keyframes screenIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-family: 'Cinzel Decorative', cursive;
+            font-family: 'Swanse', cursive;
             color: white;
             font-size: 3rem;
             margin-bottom: 30px;
             text-align: center;
-            text-shadow: 0 0 20px rgba(255, 20, 147, 0.8),
-                         0 0 40px rgba(255, 20, 147, 0.6),
-                         0 0 60px rgba(255, 20, 147, 0.4),
+            text-shadow: 0 0 20px rgba(255,20,147,0.8),
+                         0 0 40px rgba(255,20,147,0.6),
+                         0 0 60px rgba(255,20,147,0.4),
                          2px 2px 4px rgba(0,0,0,0.5);
-            animation: shimmer 3s infinite, glow 2s infinite alternate;
+            animation: shimmerTitle 3s infinite, glow 2s infinite alternate;
             position: relative;
             z-index: 1;
         }
 
-        @keyframes shimmer {
-            0%, 100% {
-                filter: brightness(1);
-            }
-            50% {
-                filter: brightness(1.3);
-            }
+        @keyframes shimmerTitle {
+            0%,100% { filter: brightness(1); }
+            50%     { filter: brightness(1.3); }
         }
 
         @keyframes glow {
-            0% {
-                text-shadow: 0 0 20px rgba(255, 20, 147, 0.8),
-                             0 0 40px rgba(255, 20, 147, 0.6),
-                             0 0 60px rgba(255, 20, 147, 0.4),
-                             2px 2px 4px rgba(0,0,0,0.5);
-            }
-            100% {
-                text-shadow: 0 0 30px rgba(255, 105, 180, 1),
-                             0 0 60px rgba(255, 105, 180, 0.8),
-                             0 0 90px rgba(255, 105, 180, 0.6),
-                             2px 2px 4px rgba(0,0,0,0.5);
-            }
+            0%   { text-shadow: 0 0 20px rgba(255,20,147,0.8),0 0 40px rgba(255,20,147,0.6),0 0 60px rgba(255,20,147,0.4),2px 2px 4px rgba(0,0,0,0.5); }
+            100% { text-shadow: 0 0 30px rgba(255,105,180,1),0 0 60px rgba(255,105,180,0.8),0 0 90px rgba(255,105,180,0.6),2px 2px 4px rgba(0,0,0,0.5); }
         }
 
-        /* Sparkle effects */
         .sparkle {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 4px; height: 4px;
             background: white;
             border-radius: 50%;
             animation: sparkle 2s infinite;
@@ -169,18 +225,12 @@
         }
 
         @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0%,100% { opacity:0; transform:scale(0); }
+            50%     { opacity:1; transform:scale(1); }
         }
 
         .message-box {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255,255,255,0.95);
             padding: 30px;
             border-radius: 15px;
             max-width: 600px;
@@ -197,43 +247,40 @@
         }
 
         .open-btn {
-            background: linear-gradient(135deg, #ff1493, #c71585);
+            background: linear-gradient(135deg,#ff1493,#c71585);
             color: white;
             border: none;
             padding: 15px 40px;
             font-size: 1.2rem;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(199, 21, 133, 0.4);
+            box-shadow: 0 4px 15px rgba(199,21,133,0.4);
             transition: transform 0.3s, box-shadow 0.3s;
-            font-family: 'Georgia', serif;
-        }
-
-        .open-btn:hover {
+            font-family: 'Swanse', serif;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(199, 21, 133, 0.6);
+            box-shadow: 0 6px 20px rgba(199,21,133,0.6);
         }
 
-        /* Gallery Screen */
+        /* ─── Gallery Screen ─── */
         #gallery-screen {
             display: none;
-            min-height: 100vh;
-            padding: 100px 20px 150px 20px;
+            height: 100vh;
+            padding: 0;
             position: relative;
+            overflow: hidden;
         }
 
-        /* Navigation */
+        #gallery-screen.visible { display: block; }
+
         .nav-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 15px 20px;
             z-index: 100;
-            background: rgba(10, 0, 21, 0.9);
+            background: rgba(10,0,21,0.9);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
@@ -256,10 +303,9 @@
         }
 
         .nav-btn {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255,255,255,0.9);
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -271,24 +317,20 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .nav-btn:hover {
-            background: white;
-            transform: scale(1.1);
-        }
+        .nav-btn:hover { background: white; transform: scale(1.1); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Photo Container */
         .photo-container {
+            position: fixed;
+            top: var(--nav-h, 90px);
+            bottom: var(--player-h, 110px);
+            left: 0;
+            right: 0;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            max-width: 900px;
-            margin: 0 auto;
+            padding: 12px 20px;
+            overflow: hidden;
         }
 
         .photo-wrapper {
@@ -296,47 +338,39 @@
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 1;
+            min-width: 0;
+            min-height: 0;
         }
 
-        .photo-wrapper img {
-            width: 100%;
-            height: auto;
+        .photo-container img {
             display: block;
             border-radius: 5px;
-            max-height: calc(100vh - 250px);
+            width: auto;
+            height: auto;
+            max-width:  calc(min(900px, 100vw - 40px) - 30px);
+            max-height: calc(100vh - var(--nav-h, 90px) - var(--player-h, 110px) - 24px - 30px);
             object-fit: contain;
+            transition: opacity 0.3s ease;
         }
 
-        /* Audio Player */
+        /* ─── Audio Player ─── */
         .audio-player {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 0, 21, 0.95);
+            bottom: 0; left: 0; right: 0;
+            background: rgba(10,0,21,0.95);
             padding: 20px;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
             z-index: 100;
             backdrop-filter: blur(10px);
         }
 
-        .audio-info {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .song-title {
-            font-size: 1.1rem;
-            color: #ff69b4;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .artist-name {
-            font-size: 0.9rem;
-            color: #ff1493;
-        }
+        .audio-info { text-align: center; margin-bottom: 15px; }
+        .song-title  { font-size:1.1rem; color:#ff69b4; font-weight:bold; margin-bottom:5px; }
+        .artist-name { font-size:0.9rem; color:#ff1493; }
 
         .controls {
             display: flex;
@@ -347,24 +381,25 @@
         }
 
         .play-pause-btn {
-            background: linear-gradient(135deg, #ff1493, #c71585);
+            background: linear-gradient(135deg,#ff1493,#c71585);
             border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            height: 40px;
+            padding: 0 20px;
+            border-radius: 20px;
             color: white;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
+            font-family: 'Swanse', serif;
+            letter-spacing: 0.05em;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: transform 0.3s;
             flex-shrink: 0;
+            white-space: nowrap;
         }
 
-        .play-pause-btn:hover {
-            transform: scale(1.1);
-        }
+        .play-pause-btn:hover { transform: scale(1.1); }
 
         .progress-container {
             flex: 1;
@@ -378,21 +413,18 @@
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #ff1493, #c71585);
+            background: linear-gradient(90deg,#ff1493,#c71585);
             border-radius: 4px;
             width: 0%;
             transition: width 0.1s;
         }
 
-        /* Final Message Popup */
+        /* ─── Final Popup ─── */
         .popup-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            inset: 0;
+            background: rgba(0,0,0,0.8);
             z-index: 200;
             align-items: center;
             justify-content: center;
@@ -409,383 +441,544 @@
             box-shadow: 0 10px 50px rgba(0,0,0,0.5);
         }
 
-        .popup-content h2 {
-            color: #4a0e4e;
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-
-        .popup-content p {
-            color: #81166d;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+        .popup-content h2 { color:#4a0e4e; margin-bottom:20px; font-size:2rem; }
+        .popup-content p  { color:#81166d; font-size:1.1rem; line-height:1.6; margin-bottom:20px; }
 
         .close-popup-btn {
-            background: linear-gradient(135deg, #ff1493, #c71585);
+            background: linear-gradient(135deg,#ff1493,#c71585);
             color: white;
             border: none;
             padding: 12px 30px;
             font-size: 1rem;
             border-radius: 25px;
             cursor: pointer;
-            font-family: 'Georgia', serif;
+            font-family: 'Swanse', serif;
         }
 
-        /* Mobile Responsiveness */
+        /* ─── Mobile ─── */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
+            h1 { font-size: 2.2rem; }
+            .message-box { padding: 20px; }
+            .message-box p { font-size: 1rem; }
+            .nav-btn { width:45px; height:45px; font-size:1.2rem; }
+            .photo-wrapper { padding: 10px; }
+            .photo-container img {
+                max-width:  calc(100vw - 40px - 20px);
+                max-height: calc(100vh - var(--nav-h, 90px) - var(--player-h, 110px) - 24px - 20px);
             }
-
-            .message-box {
-                padding: 20px;
-            }
-
-            .message-box p {
-                font-size: 1rem;
-            }
-
-            .nav-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
-
-            .photo-wrapper {
-                padding: 10px;
-            }
-
-            .photo-wrapper img {
-                max-height: calc(100vh - 280px);
-            }
-
-            .audio-player {
-                padding: 15px;
-            }
-
-            .song-title {
-                font-size: 1rem;
-            }
-
-            .artist-name {
-                font-size: 0.85rem;
-            }
-
-            .play-pause-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
-            }
-
-            .photo-caption {
-                font-size: 0.85rem;
-            }
-
-            #gallery-screen {
-                padding: 120px 20px 150px 20px;
-            }
+            .audio-player { padding: 15px; }
+            .song-title { font-size: 1rem; }
+            .artist-name { font-size: 0.85rem; }
+            .photo-caption { font-size: 0.85rem; }
+            .loading-title { font-size: 1.1rem; }
+            .heart-percent { font-size: 1.3rem; }
         }
 
-        /* Hide actual audio element */
-        audio {
-            display: none;
-        }
+        audio { display: none; }
     </style>
 </head>
 <body>
-    <!-- Animated Blob Background -->
-    <div class="blob-background">
-        <div class="blob"></div>
-        <div class="blob"></div>
-        <div class="blob"></div>
-        <div class="blob"></div>
-        <div class="blob"></div>
+
+<!-- Blob Background -->
+<div class="blob-background">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     LOADING SCREEN
+═══════════════════════════════════════ -->
+<div id="loading-screen">
+    <div class="loading-title">Preparing something special…</div>
+
+    <div class="heart-container">
+        <svg class="heart-svg" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Fill gradient -->
+                <linearGradient id="heartGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ff69b4"/>
+                    <stop offset="100%" stop-color="#c71585"/>
+                </linearGradient>
+                <!-- Shimmer gradient -->
+                <linearGradient id="shimmerGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+                    <stop offset="50%"  stop-color="white" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                </linearGradient>
+                <!-- Clip path = exact heart shape -->
+                <clipPath id="heart-clip-path">
+                    <path d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"/>
+                </clipPath>
+                <!-- Clip for the fill level (driven by JS) -->
+                <clipPath id="heart-clip-level">
+                    <rect id="fill-rect" x="0" y="150" width="160" height="0"/>
+                </clipPath>
+            </defs>
+
+            <!-- Outline -->
+            <path class="heart-outline"
+                  d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"/>
+
+            <!-- Fill (clipped to heart shape AND fill level) -->
+            <g clip-path="url(#heart-clip-level)">
+                <path class="heart-fill"
+                      d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"/>
+                <!-- Shimmer on fill -->
+                <rect x="-160" y="0" width="160" height="160"
+                      fill="url(#shimmerGradient)"
+                      opacity="0.4"
+                      clip-path="url(#heart-clip-path)">
+                    <animateTransform attributeName="transform" type="translate"
+                                      from="-160 0" to="320 0"
+                                      dur="2s" repeatCount="indefinite"/>
+                </rect>
+            </g>
+
+            <!-- Outer glow ring (pulse) -->
+            <path d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"
+                  fill="none" stroke="#ff1493" stroke-width="3" opacity="0">
+                <animate attributeName="opacity" values="0.7;0" dur="1.5s" repeatCount="indefinite"/>
+                <animate attributeName="stroke-width" values="3;12" dur="1.5s" repeatCount="indefinite"/>
+            </path>
+        </svg>
+        <div class="heart-percent" id="heart-percent">0%</div>
     </div>
 
-    <!-- Welcome Screen -->
-    <div id="welcome-screen">
-        <h1 id="main-title">Happy Valentine's Cynthia!</h1>
-        <div class="message-box">
-            <p>
-                <!-- Edit your message here -->
-                Every moment with you is a treasure I hold close to my heart. 
-                This gallery is a collection of our favorite memories together, 
-                each one set to a song that reminds me of you. 
-                I love you more than words can express. ❤️
-            </p>
-        </div>
-        <button class="open-btn" onclick="openGallery()">Open Gallery</button>
+    <div class="loading-status" id="loading-status">Loading memories…</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     WELCOME SCREEN
+═══════════════════════════════════════ -->
+<div id="welcome-screen">
+    <h1 id="main-title">Happy Valentine's Cynthia!</h1>
+    <div class="message-box">
+        <p>
+            Dear Cynthia, happy valentines. I love you very very much.
+            Thank you for being with me for three whole valentines days.
+            I truely appreciate every day I get to spend with you. You have been so patient and understanding. 
+            I am really the luckiest guy ever to be with you. I love you sosoososo much.
+            
+            This is a collection of 26 of my favorite photos with you. I've added some music to each one that
+            I think is a good mix of both of us. Happy Valentines Cynthia ❤️ (P.S. There isn't any spell check in the code editor so there's def some bad spelling, sorry! MWAHH)
+        </p>
     </div>
+    <button class="open-btn" onclick="openGallery()">Open Gallery</button>
+</div>
 
-    <!-- Gallery Screen -->
-    <div id="gallery-screen">
-        <div class="nav-container">
-            <div class="photo-caption" id="photo-caption">Memory 1</div>
-            <div class="nav-buttons">
-                <button class="nav-btn" id="prev-btn" onclick="previousPhoto()">←</button>
-                <button class="nav-btn" id="next-btn" onclick="nextPhoto()">→</button>
-            </div>
-        </div>
-
-        <div class="photo-container">
-            <div class="photo-wrapper">
-                <img id="current-photo" src="" alt="Memory">
-            </div>
-        </div>
-
-        <div class="audio-player">
-            <div class="audio-info">
-                <div class="song-title" id="song-title">Loading...</div>
-                <div class="artist-name" id="artist-name"></div>
-            </div>
-            <div class="controls">
-                <button class="play-pause-btn" id="play-pause" onclick="togglePlayPause()">
-                    ▶
-                </button>
-                <div class="progress-container" id="progress-container" onclick="seek(event)">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-            </div>
+<!-- ═══════════════════════════════════════
+     GALLERY SCREEN
+═══════════════════════════════════════ -->
+<div id="gallery-screen">
+    <div class="nav-container">
+        <div class="photo-caption" id="photo-caption">Memory 1</div>
+        <div class="nav-buttons">
+            <button class="nav-btn" id="prev-btn" onclick="previousPhoto()">←</button>
+            <button class="nav-btn" id="next-btn" onclick="nextPhoto()">→</button>
         </div>
     </div>
 
-    <!-- Final Message Popup -->
-    <div class="popup-overlay" id="popup">
-        <div class="popup-content">
-            <h2>💕</h2>
-            <p>
-                <!-- Edit your final message here -->
-                Thank you for being my everything. 
-                Here's to many more memories together. 
-                Happy Valentine's Day, my love!
-            </p>
-            <button class="close-popup-btn" onclick="closePopup()">Close</button>
+    <div class="photo-container">
+        <div class="photo-wrapper">
+            <img id="current-photo" src="" alt="Memory">
         </div>
     </div>
 
-    <audio id="audio" loop></audio>
+    <div class="audio-player">
+        <div class="audio-info">
+            <div class="song-title"  id="song-title">Loading...</div>
+            <div class="artist-name" id="artist-name"></div>
+        </div>
+        <div class="controls">
+            <button class="play-pause-btn" id="play-pause" onclick="togglePlayPause()">Play</button>
+            <div class="progress-container" id="progress-container" onclick="seek(event)">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>
-        // Photo captions - edit these for each photo
-        const photoCaptions = [
-            "Our First Adventure",
-            "Remember This Day?",
-            "That Beautiful Sunset",
-            "Our Favorite Spot",
-            "Laughing Together",
-            "Making Memories",
-            "Sweet Moments",
-            "Just Us Two",
-            "Picture Perfect",
-            "Happiness",
-            "Together Forever",
-            "Special Times",
-            "Love & Laughter",
-            "Best Friends",
-            "Our Story",
-            "Pure Joy",
-            "Precious Memories",
-            "Heart & Soul",
-            "Always & Forever",
-            "You & Me",
-            "Endless Love",
-            "Beautiful Us",
-            "True Love",
-            "My Everything",
-            "Our Journey",
-            "Forever Yours"
-        ];
+<!-- Final Popup -->
+<div class="popup-overlay" id="popup">
+    <div class="popup-content">
+        <h2>💕</h2>
+        <p>
+            Thank you for being my everything.
+            I love you so very much, here's to many more years together!
+            Happy Valentine's Day, Cynthia!
+        </p>
+        <button class="close-popup-btn" onclick="closePopup()">Close</button>
+    </div>
+</div>
 
-        let songTitles = [];
-        let currentIndex = 0;
-        const totalPhotos = 26;
-        const audio = document.getElementById('audio');
-        let isPlaying = false;
+<audio id="audio" loop></audio>
 
-        // Load song titles from titles.txt
-        async function loadSongTitles() {
-            try {
-                const response = await fetch('audio/titles.txt');
-                const text = await response.text();
-                songTitles = text.trim().split('\n').map(line => line.trim());
-                console.log('Loaded song titles:', songTitles);
-            } catch (error) {
-                console.error('Error loading song titles:', error);
-                // Fallback to placeholder titles
-                songTitles = Array.from({length: 26}, (_, i) => `Song ${i + 1} - Artist ${i + 1}`);
-            }
-        }
+<script>
+// ═══════════════════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════════════════
+const TOTAL_PHOTOS  = 26;
+const LOOKAHEAD     = 2;   // preload this many ahead/behind current
+const EXTENSIONS    = ['JPEG', 'JPG', 'jpeg', 'jpg'];
 
-        // Image extensions - try both JPEG and JPG
-        async function getImageExtension(num) {
-            // Try JPEG first
-            let response = await fetch(`photos/${num}.JPEG`, {method: 'HEAD'});
-            if (response.ok) return 'JPEG';
-            
-            // Try JPG
-            response = await fetch(`photos/${num}.JPG`, {method: 'HEAD'});
-            if (response.ok) return 'JPG';
-            
-            // Try jpeg lowercase
-            response = await fetch(`photos/${num}.jpeg`, {method: 'HEAD'});
-            if (response.ok) return 'jpeg';
-            
-            // Try jpg lowercase
-            response = await fetch(`photos/${num}.jpg`, {method: 'HEAD'});
-            if (response.ok) return 'jpg';
-            
-            // Default to JPEG
-            return 'JPEG';
-        }
+const photoCaptions = [
+    "In the beginning. This pic was my wallpaper for a while after this :)","Flower baby! Very idilic very dreamy.","In our medieval era. So tough, no-one messes with us fr.",
+    "Looking smooth and sweet. You look really really beautiful in that dress.","Locked in. Water mode. It's giving the 2nd Avatar movie.","One of the OG Lookout sessions. Just after exams!",
+    "Terrible resolution? Yes. Still a really cute photo? Also yes.","Why were we so locked in to cook?","The optimal setup. Nice view with a diet Coke. The beach was there too :). ","On da bus. We were dripping out.",
+    "Our natural nature vibes (This song is broken sorry idk why :(","When we got that HUGE dole whip. Was so good but couldn't finish it all.","I had a lot of fun messing around with the silly fits with you","Just two chill people. Chilling.",
+    "If we were animated like the movie we watched on our first date :)","Pre-swimming lock in. You looking realll cuttie here","Wehey! Bringing out the dawgs","PJ and Ikea run. I really enjoy going around Ikea with you!",
+    "Cute Pose Pt.1","Cute Pose Pt.2 (who did it better?)","I realised I should add one of me in cos it's for you, not me (whoopsies!)","Strong baby with her strong arms :)",
+    "Dripped out and ready to drink (no drinking was done but it's the thought that counts)","Maccas, a classic. And you, even better.","On the grind. The grind never stops!","Being fatties together. I love being fatties with you baby"
+];
 
-        // Create sparkles around the title
-        let sparkleInterval = null;
-        
-        function createSparkles() {
-            const title = document.getElementById('main-title');
-            
-            sparkleInterval = setInterval(() => {
-                const rect = title.getBoundingClientRect();
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
-                sparkle.style.top = (rect.top + Math.random() * rect.height) + 'px';
-                sparkle.style.animationDelay = Math.random() + 's';
-                document.body.appendChild(sparkle);
-                
-                setTimeout(() => sparkle.remove(), 2000);
-            }, 300);
-        }
+// ═══════════════════════════════════════════════════
+//  CACHE STORES
+// ═══════════════════════════════════════════════════
+const imageCache   = {};   // index → HTMLImageElement (preloaded)
+const audioCache   = {};   // index → Blob URL
+const extCache     = {};   // index → resolved extension string
+let   songTitles   = [];
 
-        function stopSparkles() {
-            if (sparkleInterval) {
-                clearInterval(sparkleInterval);
-                sparkleInterval = null;
-            }
-            // Remove any remaining sparkles
-            document.querySelectorAll('.sparkle').forEach(el => el.remove());
-        }
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+let currentIndex = 0;
+let isPlaying    = false;
+const audio      = document.getElementById('audio');
 
-        async function openGallery() {
-            stopSparkles();
-            await loadSongTitles();
-            document.getElementById('welcome-screen').style.display = 'none';
-            document.getElementById('gallery-screen').style.display = 'block';
-            loadPhoto(0);
-            playAudio();
-        }
+// ═══════════════════════════════════════════════════
+//  LOADING UI
+// ═══════════════════════════════════════════════════
+const fillRect    = document.getElementById('fill-rect');
+const heartPct    = document.getElementById('heart-percent');
+const loadStatus  = document.getElementById('loading-status');
 
-        async function loadPhoto(index) {
-            currentIndex = index;
-            const photoNum = index + 1;
-            const ext = await getImageExtension(photoNum);
-            
-            document.getElementById('current-photo').src = `photos/${photoNum}.${ext}`;
-            audio.src = `audio/${photoNum}.mp3`;
-            
-            // Update photo caption
-            document.getElementById('photo-caption').textContent = photoCaptions[index] || `Memory ${photoNum}`;
-            
-            // Parse and display song info
-            const songInfo = songTitles[index] ? songTitles[index].split(' - ') : [`Song ${photoNum}`, 'Unknown Artist'];
-            document.getElementById('song-title').textContent = songInfo[0] || 'Unknown Song';
-            document.getElementById('artist-name').textContent = songInfo[1] || '';
-            
-            updateNavigationButtons();
-        }
+// Heart fills bottom-to-top. SVG viewBox height = 150.
+// y goes from 150 (empty) to 0 (full).
+function setHeartFill(pct) {
+    const clampedPct = Math.min(100, Math.max(0, pct));
+    const filledH    = (clampedPct / 100) * 150;
+    const y          = 150 - filledH;
+    fillRect.setAttribute('y',      y);
+    fillRect.setAttribute('height', filledH);
+    heartPct.textContent = Math.round(clampedPct) + '%';
+}
 
-        function updateNavigationButtons() {
-            // Both buttons are always arrows now
-            document.getElementById('prev-btn').textContent = '←';
-        }
+// Spawn floating particles on the loading screen
+function spawnLoadParticles() {
+    const colors = ['#ff69b4','#ff1493','#c71585','#ffb6c1','#fff0f5'];
+    for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'load-particle';
+        p.style.setProperty('--x',     Math.random() * 100 + 'vw');
+        p.style.setProperty('--dur',   (3 + Math.random() * 5) + 's');
+        p.style.setProperty('--delay', (Math.random() * 5) + 's');
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.width  = (3 + Math.random() * 6) + 'px';
+        p.style.height = p.style.width;
+        document.body.appendChild(p);
+    }
+}
 
-        function previousPhoto() {
-            if (currentIndex === 0) {
-                // Go back to welcome screen
-                document.getElementById('gallery-screen').style.display = 'none';
-                document.getElementById('welcome-screen').style.display = 'flex';
-                audio.pause();
-                isPlaying = false;
-                updatePlayPauseButton();
-                createSparkles(); // Restart sparkles when going back to welcome
-            } else {
-                loadPhoto(currentIndex - 1);
-                playAudio();
-            }
-        }
+// ═══════════════════════════════════════════════════
+//  EXTENSION DETECTION (with caching)
+// ═══════════════════════════════════════════════════
+async function resolveExtension(num) {
+    if (extCache[num]) return extCache[num];
+    for (const ext of EXTENSIONS) {
+        try {
+            const r = await fetch(`photos/${num}.${ext}`, { method: 'HEAD' });
+            if (r.ok) { extCache[num] = ext; return ext; }
+        } catch {}
+    }
+    extCache[num] = 'JPEG'; // fallback
+    return 'JPEG';
+}
 
-        function nextPhoto() {
-            if (currentIndex === totalPhotos - 1) {
-                // Show final popup
-                document.getElementById('popup').style.display = 'flex';
-            } else {
-                loadPhoto(currentIndex + 1);
-                playAudio();
-            }
-        }
-
-        function playAudio() {
-            // Small delay to ensure audio source is loaded
-            setTimeout(() => {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    updatePlayPauseButton();
-                }).catch(err => {
-                    console.log('Audio play failed:', err);
-                });
-            }, 100);
-        }
-
-        function togglePlayPause() {
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-            } else {
-                audio.play();
-                isPlaying = true;
-            }
-            updatePlayPauseButton();
-        }
-
-        function updatePlayPauseButton() {
-            document.getElementById('play-pause').textContent = isPlaying ? '⏸' : '▶';
-        }
-
-        function seek(event) {
-            const progressContainer = document.getElementById('progress-container');
-            const clickX = event.offsetX;
-            const width = progressContainer.offsetWidth;
-            const percentage = clickX / width;
-            audio.currentTime = audio.duration * percentage;
-        }
-
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
-
-        // Update progress bar
-        audio.addEventListener('timeupdate', () => {
-            if (audio.duration) {
-                const percentage = (audio.currentTime / audio.duration) * 100;
-                document.getElementById('progress-bar').style.width = percentage + '%';
-            }
+// ═══════════════════════════════════════════════════
+//  IMAGE PRELOAD
+// ═══════════════════════════════════════════════════
+function preloadImage(index) {
+    if (imageCache[index]) return Promise.resolve(imageCache[index]);
+    const num = index + 1;
+    return resolveExtension(num).then(ext => {
+        return new Promise(resolve => {
+            const img = new Image();
+            img.onload  = () => { imageCache[index] = img; resolve(img); };
+            img.onerror = () => { imageCache[index] = img; resolve(img); }; // don't block on broken images
+            img.src = `photos/${num}.${ext}`;
         });
+    });
+}
 
-        // Update play button when audio ends/pauses
-        audio.addEventListener('pause', () => {
-            isPlaying = false;
-            updatePlayPauseButton();
+// ═══════════════════════════════════════════════════
+//  AUDIO PRELOAD (fetch → blob URL so it's truly cached)
+// ═══════════════════════════════════════════════════
+function preloadAudio(index) {
+    if (audioCache[index]) return Promise.resolve(audioCache[index]);
+    const num = index + 1;
+    return fetch(`audio/${num}.mp3`)
+        .then(r => {
+            if (!r.ok) throw new Error('audio fetch failed');
+            return r.blob();
+        })
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            audioCache[index] = url;
+            return url;
+        })
+        .catch(() => {
+            audioCache[index] = `audio/${num}.mp3`; // fallback to direct path
+            return audioCache[index];
         });
+}
 
-        audio.addEventListener('play', () => {
-            isPlaying = true;
-            updatePlayPauseButton();
-        });
+// ═══════════════════════════════════════════════════
+//  LOAD SONG TITLES
+// ═══════════════════════════════════════════════════
+async function loadSongTitles() {
+    try {
+        const r    = await fetch('audio/titles.txt');
+        const text = await r.text();
+        songTitles = text.trim().split('\n').map(l => l.trim());
+    } catch {
+        songTitles = Array.from({ length: TOTAL_PHOTOS }, (_, i) => `Song ${i+1} - Artist ${i+1}`);
+    }
+}
 
-        // Create sparkles on page load
-        window.addEventListener('load', createSparkles);
-    </script>
+// ═══════════════════════════════════════════════════
+//  INITIAL PRELOAD (everything, with progress)
+// ═══════════════════════════════════════════════════
+async function preloadAll() {
+    spawnLoadParticles();
+    await loadSongTitles();
+
+    const tasks = [];
+    for (let i = 0; i < TOTAL_PHOTOS; i++) {
+        tasks.push({ type: 'img',   index: i });
+        tasks.push({ type: 'audio', index: i });
+    }
+
+    const total    = tasks.length;
+    let   complete = 0;
+
+    function tick() {
+        complete++;
+        const pct = (complete / total) * 100;
+        setHeartFill(pct);
+
+        const remaining = total - complete;
+        if (remaining === 0) {
+            loadStatus.textContent = 'Ready! 💕';
+        } else if (complete % 2 === 0) {
+            const msgs = [
+                'Loading memories…',
+                'Wrapping with love…',
+                'Almost ready…',
+                'Filling with warmth…',
+                'Just a moment…',
+            ];
+            loadStatus.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+        }
+    }
+
+    // Run all preloads concurrently, calling tick() as each finishes
+    await Promise.all(
+        tasks.map(t => {
+            const promise = t.type === 'img'
+                ? preloadImage(t.index)
+                : preloadAudio(t.index);
+            return promise.then(tick).catch(tick); // never block on failure
+        })
+    );
+}
+
+// ═══════════════════════════════════════════════════
+//  SHOW WELCOME AFTER LOAD
+// ═══════════════════════════════════════════════════
+async function init() {
+    setHeartFill(0);
+    await preloadAll();
+
+    // Brief pause so user sees 100%
+    await new Promise(r => setTimeout(r, 600));
+
+    document.getElementById('loading-screen').classList.add('fade-out');
+    setTimeout(() => {
+        document.getElementById('loading-screen').style.display = 'none';
+        document.getElementById('welcome-screen').classList.add('visible');
+        createSparkles();
+    }, 800);
+}
+
+// ═══════════════════════════════════════════════════
+//  SPARKLES (welcome screen)
+// ═══════════════════════════════════════════════════
+let sparkleInterval = null;
+
+function createSparkles() {
+    const title = document.getElementById('main-title');
+    sparkleInterval = setInterval(() => {
+        const rect    = title.getBoundingClientRect();
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left             = (rect.left + Math.random() * rect.width) + 'px';
+        sparkle.style.top              = (rect.top  + Math.random() * rect.height) + 'px';
+        sparkle.style.animationDelay   = Math.random() + 's';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 2000);
+    }, 300);
+}
+
+function stopSparkles() {
+    if (sparkleInterval) { clearInterval(sparkleInterval); sparkleInterval = null; }
+    document.querySelectorAll('.sparkle').forEach(el => el.remove());
+}
+
+// ═══════════════════════════════════════════════════
+//  GALLERY OPEN
+// ═══════════════════════════════════════════════════
+function openGallery() {
+    stopSparkles();
+    document.getElementById('welcome-screen').classList.remove('visible');
+    document.getElementById('gallery-screen').classList.add('visible');
+    showPhoto(0);
+    playAudio();
+}
+
+// ═══════════════════════════════════════════════════
+//  SHOW PHOTO (instant from cache)
+// ═══════════════════════════════════════════════════
+function showPhoto(index) {
+    currentIndex = index;
+    const num    = index + 1;
+
+    // Image — pull from cache instantly
+    const img    = document.getElementById('current-photo');
+    img.style.opacity = '0';
+    if (imageCache[index]) {
+        img.src = imageCache[index].src;
+    } else {
+        img.src = `photos/${num}.JPEG`; // shouldn't happen, but safe fallback
+    }
+    img.onload = () => { img.style.opacity = '1'; };
+    // If already loaded (cached), force opacity
+    if (img.complete) img.style.opacity = '1';
+
+    // Audio — pull from cache (blob URL) instantly
+    const audioSrc = audioCache[index] || `audio/${num}.mp3`;
+    if (audio.src !== audioSrc) {
+        audio.src = audioSrc;
+    }
+
+    // Caption
+    document.getElementById('photo-caption').textContent =
+        photoCaptions[index] || `Memory ${num}`;
+
+    // Song info
+    const parts = songTitles[index] ? songTitles[index].split(' - ') : [`Song ${num}`, ''];
+    document.getElementById('song-title').textContent  = parts[0] || 'Unknown Song';
+    document.getElementById('artist-name').textContent = parts[1] || '';
+
+    // Lookahead: preload neighbours in background (they may already be cached)
+    for (let i = index - LOOKAHEAD; i <= index + LOOKAHEAD; i++) {
+        if (i >= 0 && i < TOTAL_PHOTOS && i !== index) {
+            preloadImage(i);
+            preloadAudio(i);
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════════
+function previousPhoto() {
+    if (currentIndex === 0) {
+        document.getElementById('gallery-screen').classList.remove('visible');
+        document.getElementById('welcome-screen').classList.add('visible');
+        audio.pause();
+        isPlaying = false;
+        updatePlayPauseButton();
+        createSparkles();
+    } else {
+        showPhoto(currentIndex - 1);
+        playAudio();
+    }
+}
+
+function nextPhoto() {
+    if (currentIndex === TOTAL_PHOTOS - 1) {
+        document.getElementById('popup').style.display = 'flex';
+    } else {
+        showPhoto(currentIndex + 1);
+        playAudio();
+    }
+}
+
+// ═══════════════════════════════════════════════════
+//  AUDIO CONTROLS
+// ═══════════════════════════════════════════════════
+function playAudio() {
+    audio.play()
+        .then(() => { isPlaying = true; updatePlayPauseButton(); })
+        .catch(err => console.log('Audio blocked:', err));
+}
+
+function togglePlayPause() {
+    if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+    } else {
+        audio.play();
+        isPlaying = true;
+    }
+    updatePlayPauseButton();
+}
+
+function updatePlayPauseButton() {
+    document.getElementById('play-pause').textContent = isPlaying ? 'Pause' : 'Play';
+}
+
+function seek(event) {
+    const w   = document.getElementById('progress-container').offsetWidth;
+    const pct = event.offsetX / w;
+    if (audio.duration) audio.currentTime = audio.duration * pct;
+}
+
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+// Progress bar
+audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+        document.getElementById('progress-bar').style.width =
+            (audio.currentTime / audio.duration * 100) + '%';
+    }
+});
+audio.addEventListener('pause', () => { isPlaying = false; updatePlayPauseButton(); });
+audio.addEventListener('play',  () => { isPlaying = true;  updatePlayPauseButton(); });
+
+// ═══════════════════════════════════════════════════
+//  DYNAMIC HEIGHT MEASUREMENT
+//  Sets CSS vars so photo-container fills exactly the
+//  space between the fixed nav and audio player.
+// ═══════════════════════════════════════════════════
+function updateLayoutVars() {
+    const nav    = document.querySelector('.nav-container');
+    const player = document.querySelector('.audio-player');
+    if (nav)    document.documentElement.style.setProperty('--nav-h',    nav.offsetHeight    + 'px');
+    if (player) document.documentElement.style.setProperty('--player-h', player.offsetHeight + 'px');
+}
+
+// ═══════════════════════════════════════════════════
+//  KICK OFF
+// ═══════════════════════════════════════════════════
+window.addEventListener('load', () => { init(); updateLayoutVars(); });
+window.addEventListener('resize', updateLayoutVars);
+</script>
 </body>
 </html>
