@@ -53,17 +53,143 @@
             75%      { transform: translate(80px,-80px) scale(1.1); }
         }
 
+        /* ─── LOGIN SCREEN ─── */
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #login-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 105, 180, 0.25);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px 36px;
+            width: 90%;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 20, 147, 0.08);
+        }
+
+        .login-title {
+            font-family: 'Swanse', cursive;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.7);
+            letter-spacing: 0.03em;
+        }
+
+        .login-subtitle {
+            color: rgba(255, 182, 193, 0.7);
+            font-size: 0.78rem;
+            text-align: center;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top: -10px;
+        }
+
+        .login-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .login-field label {
+            color: rgba(255, 182, 193, 0.85);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .login-field input {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: white;
+            font-family: 'Swanse', serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .login-field input:focus {
+            border-color: rgba(255, 20, 147, 0.7);
+            box-shadow: 0 0 0 3px rgba(255, 20, 147, 0.12);
+        }
+
+        .login-field input::placeholder {
+            color: rgba(255, 182, 193, 0.3);
+        }
+
+        .login-error {
+            color: #ff6b9d;
+            font-size: 0.8rem;
+            text-align: center;
+            min-height: 1.1em;
+            letter-spacing: 0.03em;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #ff1493, #c71585);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Swanse', serif;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 4px 20px rgba(199, 21, 133, 0.4);
+        }
+
+        .login-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .login-btn:active { transform: translateY(0); }
+        .login-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* shake animation for wrong password */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%       { transform: translateX(-8px); }
+            40%       { transform: translateX(8px); }
+            60%       { transform: translateX(-6px); }
+            80%       { transform: translateX(6px); }
+        }
+
+        .login-box.shake { animation: shake 0.4s ease; }
+
         /* ─── LOADING SCREEN ─── */
         #loading-screen {
             position: fixed;
             inset: 0;
             z-index: 1000;
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 32px;
             transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loading-screen.visible {
+            display: flex;
         }
 
         #loading-screen.fade-out {
@@ -98,16 +224,13 @@
             filter: drop-shadow(0 0 20px rgba(255,20,147,0.7));
         }
 
-        /* Outline path */
         .heart-outline {
             fill: none;
             stroke: rgba(255, 105, 180, 0.35);
             stroke-width: 2;
         }
 
-        /* Clip path for fill level */
         #heart-clip rect {
-            /* driven by JS */
             transition: y 0.15s ease, height 0.15s ease;
         }
 
@@ -116,7 +239,6 @@
             clip-path: url(#heart-clip-path);
         }
 
-        /* Shimmer overlay on heart */
         .heart-shimmer {
             fill: url(#shimmerGradient);
             clip-path: url(#heart-clip-path);
@@ -129,7 +251,6 @@
             100% { transform: translateX(160px); }
         }
 
-        /* Percentage text inside heart */
         .heart-percent {
             position: absolute;
             font-family: 'Swanse', cursive;
@@ -140,7 +261,6 @@
             letter-spacing: -0.02em;
         }
 
-        /* Floating particles during load */
         .load-particle {
             position: fixed;
             width: 6px;
@@ -472,6 +592,8 @@
             .photo-caption { font-size: 0.85rem; }
             .loading-title { font-size: 1.1rem; }
             .heart-percent { font-size: 1.3rem; }
+            .login-box { padding: 30px 24px; }
+            .login-title { font-size: 1.3rem; }
         }
 
         audio { display: none; }
@@ -489,6 +611,30 @@
 </div>
 
 <!-- ═══════════════════════════════════════
+     LOGIN SCREEN
+═══════════════════════════════════════ -->
+<div id="login-screen">
+    <div class="login-box" id="login-box">
+        <div class="login-title">💕 Private Gallery</div>
+        <div class="login-subtitle">Enter your details to continue</div>
+
+        <div class="login-field">
+            <label for="login-username">Username</label>
+            <input type="text" id="login-username" placeholder="username" autocomplete="off" autocapitalize="off" spellcheck="false">
+        </div>
+
+        <div class="login-field">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="off">
+        </div>
+
+        <div class="login-error" id="login-error"></div>
+
+        <button class="login-btn" id="login-btn" onclick="attemptLogin()">Enter ❤️</button>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
      LOADING SCREEN
 ═══════════════════════════════════════ -->
 <div id="loading-screen">
@@ -497,36 +643,29 @@
     <div class="heart-container">
         <svg class="heart-svg" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <!-- Fill gradient -->
                 <linearGradient id="heartGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stop-color="#ff69b4"/>
                     <stop offset="100%" stop-color="#c71585"/>
                 </linearGradient>
-                <!-- Shimmer gradient -->
                 <linearGradient id="shimmerGradient" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0%"   stop-color="white" stop-opacity="0"/>
                     <stop offset="50%"  stop-color="white" stop-opacity="0.5"/>
                     <stop offset="100%" stop-color="white" stop-opacity="0"/>
                 </linearGradient>
-                <!-- Clip path = exact heart shape -->
                 <clipPath id="heart-clip-path">
                     <path d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"/>
                 </clipPath>
-                <!-- Clip for the fill level (driven by JS) -->
                 <clipPath id="heart-clip-level">
                     <rect id="fill-rect" x="0" y="150" width="160" height="0"/>
                 </clipPath>
             </defs>
 
-            <!-- Outline -->
             <path class="heart-outline"
                   d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"/>
 
-            <!-- Fill (clipped to heart shape AND fill level) -->
             <g clip-path="url(#heart-clip-level)">
                 <path class="heart-fill"
                       d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"/>
-                <!-- Shimmer on fill -->
                 <rect x="-160" y="0" width="160" height="160"
                       fill="url(#shimmerGradient)"
                       opacity="0.4"
@@ -537,7 +676,6 @@
                 </rect>
             </g>
 
-            <!-- Outer glow ring (pulse) -->
             <path d="M80 130 C80 130 15 90 15 50 C15 28 32 14 52 14 C63 14 73 20 80 29 C87 20 97 14 108 14 C128 14 145 28 145 50 C145 90 80 130 80 130 Z"
                   fill="none" stroke="#ff1493" stroke-width="3" opacity="0">
                 <animate attributeName="opacity" values="0.7;0" dur="1.5s" repeatCount="indefinite"/>
@@ -618,10 +756,111 @@
 
 <script>
 // ═══════════════════════════════════════════════════
+//  SHA-256 UTILITY (Web Crypto API)
+// ═══════════════════════════════════════════════════
+async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ═══════════════════════════════════════════════════
+//  LOGIN STATE
+// ═══════════════════════════════════════════════════
+let credentialsLoaded = false;
+let allowedUsername   = '';   // stored as SHA-256 hex
+let allowedPassword   = '';   // stored as SHA-256 hex
+let contentReady      = false;
+let loginPassed       = false;
+
+// Fetch credentials.txt immediately in the background
+fetch('credentials.txt')
+    .then(r => {
+        if (!r.ok) throw new Error('credentials.txt not found');
+        return r.text();
+    })
+    .then(text => {
+        const lines = text.trim().split('\n').map(l => l.trim());
+        allowedUsername = lines[0] || '';
+        allowedPassword = lines[1] || '';
+        credentialsLoaded = true;
+    })
+    .catch(() => {
+        // If credentials.txt is missing, block access entirely
+        credentialsLoaded = true;
+        allowedUsername   = '__INVALID__';
+        allowedPassword   = '__INVALID__';
+    });
+
+// Allow Enter key to submit login
+document.addEventListener('DOMContentLoaded', () => {
+    ['login-username', 'login-password'].forEach(id => {
+        document.getElementById(id).addEventListener('keydown', e => {
+            if (e.key === 'Enter') attemptLogin();
+        });
+    });
+});
+
+async function attemptLogin() {
+    const btn = document.getElementById('login-btn');
+    const errorEl = document.getElementById('login-error');
+    const box = document.getElementById('login-box');
+
+    const usernameRaw = document.getElementById('login-username').value;
+    const passwordRaw = document.getElementById('login-password').value;
+
+    if (!usernameRaw || !passwordRaw) {
+        errorEl.textContent = 'Please enter both fields.';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Checking…';
+    errorEl.textContent = '';
+
+    // Wait for credentials to be fetched if not yet ready
+    while (!credentialsLoaded) {
+        await new Promise(r => setTimeout(r, 100));
+    }
+
+    const [hashedUser, hashedPass] = await Promise.all([
+        sha256(usernameRaw),
+        sha256(passwordRaw)
+    ]);
+
+    if (hashedUser === allowedUsername && hashedPass === allowedPassword) {
+        loginPassed = true;
+        // Login success — fade out login screen
+        document.getElementById('login-screen').classList.add('fade-out');
+        setTimeout(() => {
+            document.getElementById('login-screen').style.display = 'none';
+            // If content is already loaded, go straight to welcome. Otherwise show loading screen.
+            if (contentReady) {
+                document.getElementById('welcome-screen').classList.add('visible');
+                createSparkles();
+            } else {
+                document.getElementById('loading-screen').classList.add('visible');
+            }
+        }, 650);
+    } else {
+        // Wrong credentials — shake and show error
+        btn.disabled = false;
+        btn.textContent = 'Enter ❤️';
+        errorEl.textContent = 'Incorrect username or password.';
+        box.classList.remove('shake');
+        // Force reflow to restart animation
+        void box.offsetWidth;
+        box.classList.add('shake');
+        setTimeout(() => box.classList.remove('shake'), 500);
+    }
+}
+
+// ═══════════════════════════════════════════════════
 //  CONFIG
 // ═══════════════════════════════════════════════════
 const TOTAL_PHOTOS  = 26;
-const LOOKAHEAD     = 2;   // preload this many ahead/behind current
+const LOOKAHEAD     = 2;
 const EXTENSIONS    = ['JPEG', 'JPG', 'jpeg', 'jpg'];
 
 const photoCaptions = [
@@ -637,9 +876,9 @@ const photoCaptions = [
 // ═══════════════════════════════════════════════════
 //  CACHE STORES
 // ═══════════════════════════════════════════════════
-const imageCache   = {};   // index → HTMLImageElement (preloaded)
-const audioCache   = {};   // index → Blob URL
-const extCache     = {};   // index → resolved extension string
+const imageCache   = {};
+const audioCache   = {};
+const extCache     = {};
 let   songTitles   = [];
 
 // ═══════════════════════════════════════════════════
@@ -656,8 +895,6 @@ const fillRect    = document.getElementById('fill-rect');
 const heartPct    = document.getElementById('heart-percent');
 const loadStatus  = document.getElementById('loading-status');
 
-// Heart fills bottom-to-top. SVG viewBox height = 150.
-// y goes from 150 (empty) to 0 (full).
 function setHeartFill(pct) {
     const clampedPct = Math.min(100, Math.max(0, pct));
     const filledH    = (clampedPct / 100) * 150;
@@ -667,7 +904,6 @@ function setHeartFill(pct) {
     heartPct.textContent = Math.round(clampedPct) + '%';
 }
 
-// Spawn floating particles on the loading screen
 function spawnLoadParticles() {
     const colors = ['#ff69b4','#ff1493','#c71585','#ffb6c1','#fff0f5'];
     for (let i = 0; i < 18; i++) {
@@ -684,7 +920,7 @@ function spawnLoadParticles() {
 }
 
 // ═══════════════════════════════════════════════════
-//  EXTENSION DETECTION (with caching)
+//  EXTENSION DETECTION
 // ═══════════════════════════════════════════════════
 async function resolveExtension(num) {
     if (extCache[num]) return extCache[num];
@@ -694,7 +930,7 @@ async function resolveExtension(num) {
             if (r.ok) { extCache[num] = ext; return ext; }
         } catch {}
     }
-    extCache[num] = 'JPEG'; // fallback
+    extCache[num] = 'JPEG';
     return 'JPEG';
 }
 
@@ -708,14 +944,14 @@ function preloadImage(index) {
         return new Promise(resolve => {
             const img = new Image();
             img.onload  = () => { imageCache[index] = img; resolve(img); };
-            img.onerror = () => { imageCache[index] = img; resolve(img); }; // don't block on broken images
+            img.onerror = () => { imageCache[index] = img; resolve(img); };
             img.src = `photos/${num}.${ext}`;
         });
     });
 }
 
 // ═══════════════════════════════════════════════════
-//  AUDIO PRELOAD (fetch → blob URL so it's truly cached)
+//  AUDIO PRELOAD
 // ═══════════════════════════════════════════════════
 function preloadAudio(index) {
     if (audioCache[index]) return Promise.resolve(audioCache[index]);
@@ -731,7 +967,7 @@ function preloadAudio(index) {
             return url;
         })
         .catch(() => {
-            audioCache[index] = `audio/${num}.mp3`; // fallback to direct path
+            audioCache[index] = `audio/${num}.mp3`;
             return audioCache[index];
         });
 }
@@ -750,10 +986,9 @@ async function loadSongTitles() {
 }
 
 // ═══════════════════════════════════════════════════
-//  INITIAL PRELOAD (everything, with progress)
+//  INITIAL PRELOAD (runs in background immediately)
 // ═══════════════════════════════════════════════════
 async function preloadAll() {
-    spawnLoadParticles();
     await loadSongTitles();
 
     const tasks = [];
@@ -785,33 +1020,39 @@ async function preloadAll() {
         }
     }
 
-    // Run all preloads concurrently, calling tick() as each finishes
     await Promise.all(
         tasks.map(t => {
             const promise = t.type === 'img'
                 ? preloadImage(t.index)
                 : preloadAudio(t.index);
-            return promise.then(tick).catch(tick); // never block on failure
+            return promise.then(tick).catch(tick);
         })
     );
 }
 
 // ═══════════════════════════════════════════════════
-//  SHOW WELCOME AFTER LOAD
+//  INIT — preload starts immediately, login runs in parallel
 // ═══════════════════════════════════════════════════
 async function init() {
     setHeartFill(0);
-    await preloadAll();
+    spawnLoadParticles();
 
-    // Brief pause so user sees 100%
-    await new Promise(r => setTimeout(r, 600));
+    // Kick off preload immediately in background (no await here yet)
+    const preloadPromise = preloadAll().then(async () => {
+        await new Promise(r => setTimeout(r, 600)); // pause so user sees 100%
+        contentReady = true;
 
-    document.getElementById('loading-screen').classList.add('fade-out');
-    setTimeout(() => {
-        document.getElementById('loading-screen').style.display = 'none';
-        document.getElementById('welcome-screen').classList.add('visible');
-        createSparkles();
-    }, 800);
+        // If user has already logged in, transition away from loading screen now
+        if (loginPassed) {
+            document.getElementById('loading-screen').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.getElementById('welcome-screen').classList.add('visible');
+                createSparkles();
+            }, 800);
+        }
+        // Otherwise just set contentReady = true; login handler will check it
+    });
 }
 
 // ═══════════════════════════════════════════════════
@@ -850,40 +1091,34 @@ function openGallery() {
 }
 
 // ═══════════════════════════════════════════════════
-//  SHOW PHOTO (instant from cache)
+//  SHOW PHOTO
 // ═══════════════════════════════════════════════════
 function showPhoto(index) {
     currentIndex = index;
     const num    = index + 1;
 
-    // Image — pull from cache instantly
     const img    = document.getElementById('current-photo');
     img.style.opacity = '0';
     if (imageCache[index]) {
         img.src = imageCache[index].src;
     } else {
-        img.src = `photos/${num}.JPEG`; // shouldn't happen, but safe fallback
+        img.src = `photos/${num}.JPEG`;
     }
     img.onload = () => { img.style.opacity = '1'; };
-    // If already loaded (cached), force opacity
     if (img.complete) img.style.opacity = '1';
 
-    // Audio — pull from cache (blob URL) instantly
     const audioSrc = audioCache[index] || `audio/${num}.mp3`;
     if (audio.src !== audioSrc) {
         audio.src = audioSrc;
     }
 
-    // Caption
     document.getElementById('photo-caption').textContent =
         photoCaptions[index] || `Memory ${num}`;
 
-    // Song info
     const parts = songTitles[index] ? songTitles[index].split(' - ') : [`Song ${num}`, ''];
     document.getElementById('song-title').textContent  = parts[0] || 'Unknown Song';
     document.getElementById('artist-name').textContent = parts[1] || '';
 
-    // Lookahead: preload neighbours in background (they may already be cached)
     for (let i = index - LOOKAHEAD; i <= index + LOOKAHEAD; i++) {
         if (i >= 0 && i < TOTAL_PHOTOS && i !== index) {
             preloadImage(i);
@@ -964,8 +1199,6 @@ audio.addEventListener('play',  () => { isPlaying = true;  updatePlayPauseButton
 
 // ═══════════════════════════════════════════════════
 //  DYNAMIC HEIGHT MEASUREMENT
-//  Sets CSS vars so photo-container fills exactly the
-//  space between the fixed nav and audio player.
 // ═══════════════════════════════════════════════════
 function updateLayoutVars() {
     const nav    = document.querySelector('.nav-container');
